@@ -54,31 +54,26 @@ every agent uses:
   │     shared ReAct loop / base class
 
   ├── llm_client.py
-  │     Groq API calls
+  │     Groq API call coz its free :)
 
   └── tool_registry.py
         write_file, read_file, run_python
 
 
-after each task:
+ive also added the memory architecture (after each task):
+short term: working memory as a dict
+long term:episodic memory using sqlite3
+semantic memory using chromadb
 
-  ├── memory/working_memory.py
-  │     short-term context
-
-  ├── memory/episodic_memory.py
-  │     SQLite memory storage
-
-  └── memory/semantic_memory.py
-        ChromaDB vector memory
-
-
-
-separately:
   eval_runner.py       ← runs 5 tasks and scores everything, what passed , what failed
   tasks.py             ← the list of test goals
 
+```
 
-  ## How to run
+
+## How to run
+
+
 
 ```bash
 # setup
@@ -89,9 +84,9 @@ echo 'GROQ_API_KEY=your_key_here' > .env
 python3 -c "
 from orchestrator import Orchestrator
 o = Orchestrator()
-o.run('wtv task u want it to code ')
+o.run('wtv task u want it to code')
 "
 
-# run full evaluation using tasks.py ka task list 
+# run full evaluation using tasks.py benchmark list
 python3 eval_runner.py
 ```
