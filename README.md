@@ -27,26 +27,51 @@ That understanding is what lets me debug it,
 improve it, and explain it.
 
 ## Architecture
-YOU type a goal
+## Architecture
+
+```text
+type a goal
       ↓
-orchestrator.py        ← the manager for automating all calls
+orchestrator.py
       ↓
-planner_agent.py       ← breaks goal into task list
+planner_agent.py
       ↓
 orchestrator loops through tasks and calls:
-  ├── coder_agent.py   ← writes and runs code
-  ├── tester_agent.py  ← writes and runs tests  
-  └── reviewer_agent.py← reads and critiques code
+
+  ├── coder_agent.py
+  │     writes and runs code
+
+  ├── tester_agent.py
+  │     writes and runs tests
+
+  └── reviewer_agent.py
+        reads and critiques code
+
 
 every agent uses:
-  ├── base_agent.py    ← the ReAct loop they all inherit (base class)
-  ├── llm_client.py    ← the Groq API call coz its free :)
-  └── tool_registry.py ← write_file, read_file, run_python
+
+  ├── base_agent.py
+  │     shared ReAct loop / base class
+
+  ├── llm_client.py
+  │     Groq API calls
+
+  └── tool_registry.py
+        write_file, read_file, run_python
+
 
 after each task:
-  ├── memory/working_memory.py   ← current context
-  ├── memory/episodic_memory.py  ← saves to memory.db using sqlite3
-  └── memory/semantic_memory.py  ← saves to ChromaDB 
+
+  ├── memory/working_memory.py
+  │     short-term context
+
+  ├── memory/episodic_memory.py
+  │     SQLite memory storage
+
+  └── memory/semantic_memory.py
+        ChromaDB vector memory
+
+
 
 separately:
   eval_runner.py       ← runs 5 tasks and scores everything, what passed , what failed
